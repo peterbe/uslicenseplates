@@ -1,10 +1,11 @@
 var State = (function() {  // no pun intended
+  var KEY = 'uslicenseplates';
   var _state;
   function load() {
-    _state = $.jStorage.get('uslicenseplates', {});
+    _state = $.jStorage.get(KEY, {});
   }
   function save() {
-    $.jStorage.set('uslicenseplates', _state);
+    $.jStorage.set(KEY, _state);
   }
   return {
      load: load,
@@ -32,7 +33,7 @@ var StatesForm = (function() {
     var container = $('#states');
     var c = 0, uc = 0;
     $('input.custom', container).each(function() {
-      this.checked && c++ || uc++;
+      (this.checked) ? c++ : uc++;
     });
     $('#no-spotted', container).text(c);
     $('#no-remaining', container).text(uc);
@@ -43,6 +44,7 @@ var StatesForm = (function() {
        State.iterate(function(name, date) {
          $('#' + name).attr('checked', true).checkboxradio('refresh');
        });
+       update_numbers();
      },
     bind: function() {
       var fieldset = $('#states');
