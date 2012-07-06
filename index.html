@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>US License Plate Hunter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.1.0.min.css" />
+	<script src="jquery-1.7.2.min.js"></script>
+	<script src="jstorage.js"></script>
+	<script src="document.js"></script>
+	<script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+</head>
+<body>
+
+<!--
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+Florida
+Georgia
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+-->
+
+<div data-role="page" data-theme="a" id="states">
+
+	<div data-role="header">
+		<h1>US License Plate Hunter</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	        <p><span id="no-spotted">5</span> spotted &bull; <span id="no-remaining">45</span> remaining</p>
+		<form method="post">
+			<div data-role="fieldcontain">
+			 	<fieldset data-role="controlgroup">
+
+<input type="checkbox" name="checkbox-Alabama" id="Alabama" class="custom">
+<label for="Alabama">Alabama</label>
+
+<input type="checkbox" name="checkbox-Alaska" id="Alaska" class="custom">
+<label for="Alaska">Alaska</label>
+
+<input type="checkbox" name="checkbox-Arizona" id="Arizona" class="custom">
+<label for="Arizona">Arizona</label>
+
+<input type="checkbox" name="checkbox-Arkansas" id="Arkansas" class="custom">
+<label for="Arkansas">Arkansas</label>
+
+<input type="checkbox" name="checkbox-California" id="California" class="custom">
+<label for="California">California</label>
+
+<input type="checkbox" name="checkbox-Colorado" id="Colorado" class="custom">
+<label for="Colorado">Colorado</label>
+
+<input type="checkbox" name="checkbox-Connecticut" id="Connecticut" class="custom">
+<label for="Connecticut">Connecticut</label>
+
+<input type="checkbox" name="checkbox-Delaware" id="Delaware" class="custom">
+<label for="Delaware">Delaware</label>
+
+<input type="checkbox" name="checkbox-Florida" id="Florida" class="custom">
+<label for="Florida">Florida</label>
+
+<input type="checkbox" name="checkbox-Georgia" id="Georgia" class="custom">
+<label for="Georgia">Georgia</label>
+
+<input type="checkbox" name="checkbox-Hawaii" id="Hawaii" class="custom">
+<label for="Hawaii">Hawaii</label>
+
+<input type="checkbox" name="checkbox-Idaho" id="Idaho" class="custom">
+<label for="Idaho">Idaho</label>
+
+<input type="checkbox" name="checkbox-Illinois" id="Illinois" class="custom">
+<label for="Illinois">Illinois</label>
+
+<input type="checkbox" name="checkbox-Indiana" id="Indiana" class="custom">
+<label for="Indiana">Indiana</label>
+
+<input type="checkbox" name="checkbox-Iowa" id="Iowa" class="custom">
+<label for="Iowa">Iowa</label>
+
+<input type="checkbox" name="checkbox-Kansas" id="Kansas" class="custom">
+<label for="Kansas">Kansas</label>
+
+<input type="checkbox" name="checkbox-Kentucky" id="Kentucky" class="custom">
+<label for="Kentucky">Kentucky</label>
+
+<input type="checkbox" name="checkbox-Louisiana" id="Louisiana" class="custom">
+<label for="Louisiana">Louisiana</label>
+
+<input type="checkbox" name="checkbox-Maine" id="Maine" class="custom">
+<label for="Maine">Maine</label>
+
+<input type="checkbox" name="checkbox-Maryland" id="Maryland" class="custom">
+<label for="Maryland">Maryland</label>
+
+<input type="checkbox" name="checkbox-Massachusetts" id="Massachusetts" class="custom">
+<label for="Massachusetts">Massachusetts</label>
+
+<input type="checkbox" name="checkbox-Michigan" id="Michigan" class="custom">
+<label for="Michigan">Michigan</label>
+
+<input type="checkbox" name="checkbox-Minnesota" id="Minnesota" class="custom">
+<label for="Minnesota">Minnesota</label>
+
+<input type="checkbox" name="checkbox-Mississippi" id="Mississippi" class="custom">
+<label for="Mississippi">Mississippi</label>
+
+<input type="checkbox" name="checkbox-Missouri" id="Missouri" class="custom">
+<label for="Missouri">Missouri</label>
+
+<input type="checkbox" name="checkbox-Montana" id="Montana" class="custom">
+<label for="Montana">Montana</label>
+
+<input type="checkbox" name="checkbox-Nebraska" id="Nebraska" class="custom">
+<label for="Nebraska">Nebraska</label>
+
+<input type="checkbox" name="checkbox-Nevada" id="Nevada" class="custom">
+<label for="Nevada">Nevada</label>
+
+<input type="checkbox" name="checkbox-NewHampshire" id="NewHampshire" class="custom">
+<label for="NewHampshire">New Hampshire</label>
+
+<input type="checkbox" name="checkbox-NewJersey" id="NewJersey" class="custom">
+<label for="NewJersey">New Jersey</label>
+
+<input type="checkbox" name="checkbox-NewMexico" id="NewMexico" class="custom">
+<label for="NewMexico">New Mexico</label>
+
+<input type="checkbox" name="checkbox-NewYork" id="NewYork" class="custom">
+<label for="NewYork">New York</label>
+
+<input type="checkbox" name="checkbox-NorthCarolina" id="NorthCarolina" class="custom">
+<label for="NorthCarolina">North Carolina</label>
+
+<input type="checkbox" name="checkbox-NorthDakota" id="NorthDakota" class="custom">
+<label for="NorthDakota">North Dakota</label>
+
+<input type="checkbox" name="checkbox-Ohio" id="Ohio" class="custom">
+<label for="Ohio">Ohio</label>
+
+<input type="checkbox" name="checkbox-Oklahoma" id="Oklahoma" class="custom">
+<label for="Oklahoma">Oklahoma</label>
+
+<input type="checkbox" name="checkbox-Oregon" id="Oregon" class="custom">
+<label for="Oregon">Oregon</label>
+
+<input type="checkbox" name="checkbox-Pennsylvania" id="Pennsylvania" class="custom">
+<label for="Pennsylvania">Pennsylvania</label>
+
+<input type="checkbox" name="checkbox-RhodeIsland" id="RhodeIsland" class="custom">
+<label for="RhodeIsland">Rhode Island</label>
+
+<input type="checkbox" name="checkbox-SouthCarolina" id="SouthCarolina" class="custom">
+<label for="SouthCarolina">South Carolina</label>
+
+<input type="checkbox" name="checkbox-SouthDakota" id="SouthDakota" class="custom">
+<label for="SouthDakota">South Dakota</label>
+
+<input type="checkbox" name="checkbox-Tennessee" id="Tennessee" class="custom">
+<label for="Tennessee">Tennessee</label>
+
+<input type="checkbox" name="checkbox-Texas" id="Texas" class="custom">
+<label for="Texas">Texas</label>
+
+<input type="checkbox" name="checkbox-Utah" id="Utah" class="custom">
+<label for="Utah">Utah</label>
+
+<input type="checkbox" name="checkbox-Vermont" id="Vermont" class="custom">
+<label for="Vermont">Vermont</label>
+
+<input type="checkbox" name="checkbox-Virginia" id="Virginia" class="custom">
+<label for="Virginia">Virginia</label>
+
+<input type="checkbox" name="checkbox-Washington" id="Washington" class="custom">
+<label for="Washington">Washington</label>
+
+<input type="checkbox" name="checkbox-WestVirginia" id="WestVirginia" class="custom">
+<label for="WestVirginia">West Virginia</label>
+
+<input type="checkbox" name="checkbox-Wisconsin" id="Wisconsin" class="custom">
+<label for="Wisconsin">Wisconsin</label>
+
+<input type="checkbox" name="checkbox-Wyoming" id="Wyoming" class="custom">
+<label for="Wyoming">Wyoming</label>
+
+			    </fieldset>
+			</div>
+		</form>
+	</div><!-- /content -->
+
+</div><!-- /page -->
+
+</body>
+</html>
