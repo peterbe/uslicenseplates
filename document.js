@@ -11,18 +11,22 @@ var State = (function() {  // no pun intended
      load: load,
       save: save,
       add: function(name) {
-        _state[name] = new Date();
+        _state[name] = (new Date()).getTime();
         save();
       },
-      remove: function(name) {
+    remove: function(name) {
         delete _state[name];
         save();
       },
-      iterate: function(callback) {
+    iterate: function(callback) {
         $.each(_state, function(name, date) {
           callback(name, date);
         });
-      }
+      },
+    age: function(name) {
+      if (typeof _state[name] !== 'number') return 60 * 60 * 24 * 4;  // legacy
+      return ((new Date()).getTime() - _state[name]) / 1000;
+    }
   }
 })();
 
@@ -48,12 +52,23 @@ var StatesForm = (function() {
      },
     bind: function() {
       var fieldset = $('#states');
-      $('input.custom', fieldset).click(function() {
+      $('input.custom', fieldset).click(function(event) {
         update_numbers();
+        var id = $(this).attr('id');
         if (this.checked) {
-          State.add($(this).attr('id'));
+          State.add(id);
         } else {
-          State.remove($(this).attr('id'));
+          if (State.age(id) > 60 * 60) {
+            if (confirm("Are you sure you didn't see this?")) {
+              State.remove(id);
+            } else {
+              $(this).attr('checked', true).checkboxradio('refresh');
+              return false;
+            }
+          } else {
+            // so recently added it was probably a mistake
+            State.remove(id);
+          }
         }
       });
     }
