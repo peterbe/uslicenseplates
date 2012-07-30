@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# v3
+# v4
 
 CACHE:
 jquery.mobile/jquery.mobile-1.1.0.min.css
 jquery-1.7.2.min.js
 jstorage.js
+moment.min.js
 document.js
 jquery.mobile/jquery.mobile-1.1.0.min.js
