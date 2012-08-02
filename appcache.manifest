@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v4
+# v5
 
 CACHE:
 jquery.mobile/jquery.mobile-1.1.0.min.css
@@ -8,3 +8,5 @@ jstorage.js
 moment.min.js
 document.js
 jquery.mobile/jquery.mobile-1.1.0.min.js
+jquery.mobile/images/ajax-loader.gif
+jquery.mobile/images/icons-18-white.png
