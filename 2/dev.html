@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>License Plate Spotter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="Peter Bengtsson - peterbe.com">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/document.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">License Plate Spotter</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!--<h2>License Plate Spotter</h2>-->
+      <p><span id="no-spotted">0</span> spotted &bull;
+      <span id="no-remaining">50</span> remaining<br>
+      <span id="times-ago-outer">
+         started <span id="times-ago"></span>
+      </span>
+      </p>
+
+      <p id="loading">Loading...</p>
+       <form style="display:none">
+
+<a class="btn" href="#" id="Alabama"><i class="icon-remove"></i> Alabama <span></span></a>
+<a class="btn" href="#" id="Alaska"><i class="icon-remove"></i> Alaska <span></span></a>
+<a class="btn" href="#" id="Arizona"><i class="icon-remove"></i> Arizona <span></span></a>
+<a class="btn" href="#" id="Arkansas"><i class="icon-remove"></i> Arkansas <span></span></a>
+<a class="btn" href="#" id="California"><i class="icon-remove"></i> California <span></span></a>
+<a class="btn" href="#" id="Colorado"><i class="icon-remove"></i> Colorado <span></span></a>
+<a class="btn" href="#" id="Connecticut"><i class="icon-remove"></i> Connecticut <span></span></a>
+<a class="btn" href="#" id="Delaware"><i class="icon-remove"></i> Delaware <span></span></a>
+<a class="btn" href="#" id="Florida"><i class="icon-remove"></i> Florida <span></span></a>
+<a class="btn" href="#" id="Georgia"><i class="icon-remove"></i> Georgia <span></span></a>
+<a class="btn" href="#" id="Hawaii"><i class="icon-remove"></i> Hawaii <span></span></a>
+<a class="btn" href="#" id="Idaho"><i class="icon-remove"></i> Idaho <span></span></a>
+<a class="btn" href="#" id="Illinois"><i class="icon-remove"></i> Illinois <span></span></a>
+<a class="btn" href="#" id="Indiana"><i class="icon-remove"></i> Indiana <span></span></a>
+<a class="btn" href="#" id="Iowa"><i class="icon-remove"></i> Iowa <span></span></a>
+<a class="btn" href="#" id="Kansas"><i class="icon-remove"></i> Kansas <span></span></a>
+<a class="btn" href="#" id="Kentucky"><i class="icon-remove"></i> Kentucky <span></span></a>
+<a class="btn" href="#" id="Louisiana"><i class="icon-remove"></i> Louisiana <span></span></a>
+<a class="btn" href="#" id="Maine"><i class="icon-remove"></i> Maine <span></span></a>
+<a class="btn" href="#" id="Maryland"><i class="icon-remove"></i> Maryland <span></span></a>
+<a class="btn" href="#" id="Massachusetts"><i class="icon-remove"></i> Massachusetts <span></span></a>
+<a class="btn" href="#" id="Michigan"><i class="icon-remove"></i> Michigan <span></span></a>
+<a class="btn" href="#" id="Minnesota"><i class="icon-remove"></i> Minnesota <span></span></a>
+<a class="btn" href="#" id="Mississippi"><i class="icon-remove"></i> Mississippi <span></span></a>
+<a class="btn" href="#" id="Missouri"><i class="icon-remove"></i> Missouri <span></span></a>
+<a class="btn" href="#" id="Montana"><i class="icon-remove"></i> Montana <span></span></a>
+<a class="btn" href="#" id="Nebraska"><i class="icon-remove"></i> Nebraska <span></span></a>
+<a class="btn" href="#" id="Nevada"><i class="icon-remove"></i> Nevada <span></span></a>
+<a class="btn" href="#" id="NewHampshire"><i class="icon-remove"></i> New Hampshire <span></span></a>
+<a class="btn" href="#" id="NewJersey"><i class="icon-remove"></i> New Jersey <span></span></a>
+<a class="btn" href="#" id="NewMexico"><i class="icon-remove"></i> New Mexico <span></span></a>
+<a class="btn" href="#" id="NewYork"><i class="icon-remove"></i> New York <span></span></a>
+<a class="btn" href="#" id="NorthCarolina"><i class="icon-remove"></i> North Carolina <span></span></a>
+<a class="btn" href="#" id="NorthDakota"><i class="icon-remove"></i> North Dakota <span></span></a>
+<a class="btn" href="#" id="Ohio"><i class="icon-remove"></i> Ohio <span></span></a>
+<a class="btn" href="#" id="Oklahoma"><i class="icon-remove"></i> Oklahoma <span></span></a>
+<a class="btn" href="#" id="Oregon"><i class="icon-remove"></i> Oregon <span></span></a>
+<a class="btn" href="#" id="Pennsylvania"><i class="icon-remove"></i> Pennsylvania <span></span></a>
+<a class="btn" href="#" id="RhodeIsland"><i class="icon-remove"></i> Rhode Island <span></span></a>
+<a class="btn" href="#" id="SouthCarolina"><i class="icon-remove"></i> South Carolina <span></span></a>
+<a class="btn" href="#" id="SouthDakota"><i class="icon-remove"></i> South Dakota <span></span></a>
+<a class="btn" href="#" id="Tennessee"><i class="icon-remove"></i> Tennessee <span></span></a>
+<a class="btn" href="#" id="Texas"><i class="icon-remove"></i> Texas <span></span></a>
+<a class="btn" href="#" id="Utah"><i class="icon-remove"></i> Utah <span></span></a>
+<a class="btn" href="#" id="Vermont"><i class="icon-remove"></i> Vermont <span></span></a>
+<a class="btn" href="#" id="Virginia"><i class="icon-remove"></i> Virginia <span></span></a>
+<a class="btn" href="#" id="Washington"><i class="icon-remove"></i> Washington <span></span></a>
+<a class="btn" href="#" id="WestVirginia"><i class="icon-remove"></i> West Virginia <span></span></a>
+<a class="btn" href="#" id="Wisconsin"><i class="icon-remove"></i> Wisconsin <span></span></a>
+<a class="btn" href="#" id="Wyoming"><i class="icon-remove"></i> Wyoming <span></span></a>
+       </form>
+
+    </div> <!-- /container -->
+
+    <script src="jquery-1.7.2.min.js"></script>
+    <script src="bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="jstorage.js"></script>
+    <script src="moment.min.js"></script>
+    <script src="document.js"></script>
+  </body>
+</html>

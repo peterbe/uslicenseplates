@@ -1,0 +1,7 @@
+body {
+    padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+form a.btn { display:block; text-align: left; margin-bottom: 6px; }
+form a.btn-success { font-weight: bold; }
+.navbar-fixed-top { margin-bottom: 8px !important; }
+form a.btn span { float:right; }
