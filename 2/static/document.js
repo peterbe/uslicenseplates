@@ -1,5 +1,5 @@
 var State = (function() {  // no pun intended
-  var KEY = 'uslicenseplates-2';
+  var KEY = 'uslicenseplates';
   var _state;
   function load() {
     _state = $.jStorage.get(KEY, {});
