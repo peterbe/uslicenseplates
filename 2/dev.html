@@ -12,7 +12,7 @@
     <link href="static/document.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="shortcut icon" href="static/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
@@ -24,23 +24,38 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+	  <!--
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
+	  -->
+          <a class="btn btn-inverse btn-navbar open-extra-nav">Menu</a>
           <a class="brand" href="#">License Plate Spotter</a>
-          <div class="nav-collapse">
+          <!--<div class="nav-collapse">
             <ul class="nav">
               <li><a class="nav-about" href="#about">About</a></li>
               <li><a class="nav-close" href="#">Close</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
+	  -->
         </div>
+	<div id="extra-nav" style="display:none">
+	  <ul>
+              <li><a class="nav-rules" href="#rules">The Rules</a></li>
+              <li><a class="nav-facebook" href="#facebook">Log in with Facebook</a></li>
+              <li><a class="nav-about" href="#about">About</a></li>
+              <!--<li><a class="nav-close" href="#">Close</a></li>-->
+            </ul>
+	</div>
+
       </div>
     </div>
 
     <div class="container">
+
+
 
       <p id="loading">Loading...</p>
 
@@ -106,9 +121,61 @@
 <a class="btn" href="#" id="Wyoming"><i class="icon-remove"></i> Wyoming <span></span></a>
        </form>
 
-       <div id="about" style="display:none">
+       <div id="about" class="page" style="display:none">
          <h2>About this app</h2>
-         <p>Bla bla bla...</p>
+         <p>This app was built by, yours truely, <strong>Peter Bengtsson</strong>
+         (<a href="http://www.peterbe.com" target="_blank">www.peterbe.com</a>)
+         because having recently moved to the USA I found myself searching for new
+         out of state license plates I've never seen before. But I had to log that
+         somewhere. And what better way than to write a fun little mobile app to do that.
+         </p>
+         <p>
+         All code for this project is <strong>Open Source</strong> and available
+         at <a href="https://github.com/peterbe/uslicenseplates" target="_blank">github.com/peterbe/uslicenseplates</a>.
+         </p>
+
+         <p>To be honest, this app is more of an experiment than anything else.
+         The intention is actually to re-implement this app idea in multiple different
+         ways with different types of technology so as to learn how to use and and which
+         of these tools is best.
+         </p>
+
+         <p>
+         <a class="btn go-back"><i class="icon-circle-arrow-left"></i> Go back</a>
+         </p>
+
+       </div>
+
+       <div id="rules" class="page" style="display:none">
+         <h2>The Rules</h2>
+         <p>Unlike many of games this one has no enforecable rules.
+         Since you don't have to prove how or where you spotted a plate
+         it's up to you to be truthful to yourself.</p>
+
+         <p>My rule is that you have to clearly be able to see the license plate
+         with your own eyes.
+         </p>
+
+         <p>
+         <a class="btn go-back"><i class="icon-circle-arrow-left"></i> Go back</a>
+         </p>
+
+       </div>
+
+       <div id="facebook" class="page" style="display:none">
+         <h2>Facebook</h2>
+
+         <p><em>Coming soon...</em></p>
+
+         <p>This is currently under construction but the idea is that you will
+         soon be able to log in to your Facebook account to properly save your
+         progress and sometimes brag to your friends whenever you spot a new license plate.
+         </p>
+
+         <p>
+         <a class="btn go-back"><i class="icon-circle-arrow-left"></i> Go back</a>
+         </p>
+
        </div>
 
     </div> <!-- /container -->

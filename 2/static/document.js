@@ -153,19 +153,45 @@ var StatesForm = (function() {
 var Nav = (function() {
   return {
      bind: function() {
-       $('a.nav-close').click(function() {
-         $('a.btn-navbar').click();
-         $('#form:hidden').show();
+       $('a.open-extra-nav').click(function() {
+         $('#extra-nav').toggle();
+         return false;
+         if ($('#extra-nav:visible').size()) {
+           $('#extra-nav').show();
+         } else {
+           $('#extra-nav').show();
+         }
+         return false;
+       });
+       $('a.nav-close,a.go-back').click(function() {
+         $('#extra-nav').hide();
+         $('.page').hide();
+         $('#form').show();
          $('#spotted-outer:hidden').show();
-         $('#about:visible').hide();
          return false;
        });
        $('a.nav-about').click(function() {
-         console.log('CLICKED');
          $('#form').hide();
          $('#spotted-outer').hide();
-         $('#about').show();
-         $('a.btn-navbar').click();
+         $('.page').hide();
+         $('#extra-nav').hide();
+         $('#about').fadeIn(300);
+         return false;
+       });
+       $('a.nav-rules').click(function() {
+         $('#form').hide();
+         $('#spotted-outer').hide();
+         $('.page').hide();
+         $('#extra-nav').hide();
+         $('#rules').fadeIn(300);
+         return false;
+       });
+       $('a.nav-facebook').click(function() {
+         $('#form').hide();
+         $('#spotted-outer').hide();
+         $('.page').hide();
+         $('#extra-nav').hide();
+         $('#facebook').fadeIn(300);
          return false;
        });
      }
