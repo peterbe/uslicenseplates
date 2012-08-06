@@ -32,8 +32,8 @@
           <a class="brand" href="#">License Plate Spotter</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
+              <li><a class="nav-about" href="#about">About</a></li>
+              <li><a class="nav-close" href="#">Close</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -42,16 +42,17 @@
 
     <div class="container">
 
-      <!--<h2>License Plate Spotter</h2>-->
-      <p><span id="no-spotted">0</span> spotted &bull;
-      <span id="no-remaining">50</span> remaining<br>
-      <span id="times-ago-outer">
+      <p id="loading">Loading...</p>
+
+      <p id="spotted-outer" style="display:none">
+        <span id="no-spotted">0</span> spotted &bull;
+        <span id="no-remaining">50</span> remaining<br>
+        <span id="times-ago-outer">
          started <span id="times-ago"></span>
-      </span>
+        </span>
       </p>
 
-      <p id="loading">Loading...</p>
-       <form style="display:none">
+      <form id="form" style="display:none">
 
 <a class="btn" href="#" id="Alabama"><i class="icon-remove"></i> Alabama <span></span></a>
 <a class="btn" href="#" id="Alaska"><i class="icon-remove"></i> Alaska <span></span></a>
@@ -104,6 +105,11 @@
 <a class="btn" href="#" id="Wisconsin"><i class="icon-remove"></i> Wisconsin <span></span></a>
 <a class="btn" href="#" id="Wyoming"><i class="icon-remove"></i> Wyoming <span></span></a>
        </form>
+
+       <div id="about" style="display:none">
+         <h2>About this app</h2>
+         <p>Bla bla bla...</p>
+       </div>
 
     </div> <!-- /container -->
 

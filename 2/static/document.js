@@ -117,10 +117,11 @@ var StatesForm = (function() {
        });
        update_numbers();
        $('#loading').hide();
-       $('form').show();
+       $('#spotted-outer').show();
+       $('#form').show();
      },
     bind: function() {
-      var fieldset = $('#states');
+      //var fieldset = $('#states');
       $('form a.btn').click(function(event) {
         var $el = $(this);
         var id = $el.attr('id');
@@ -149,9 +150,32 @@ var StatesForm = (function() {
 })();
 
 
+var Nav = (function() {
+  return {
+     bind: function() {
+       $('a.nav-close').click(function() {
+         $('a.btn-navbar').click();
+         $('#form:hidden').show();
+         $('#spotted-outer:hidden').show();
+         $('#about:visible').hide();
+         return false;
+       });
+       $('a.nav-about').click(function() {
+         console.log('CLICKED');
+         $('#form').hide();
+         $('#spotted-outer').hide();
+         $('#about').show();
+         $('a.btn-navbar').click();
+         return false;
+       });
+     }
+  }
+})();
+
 $(function() {
   StatesForm.preload();
   StatesForm.bind();
+  Nav.bind();
   setTimeout(function(){
     // Hide the address bar!
     window.scrollTo(0, 1);
