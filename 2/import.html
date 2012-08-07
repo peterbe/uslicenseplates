@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+   <meta charset="utf-8">
+	<title>import</title>
+    <script src="static/jquery-1.7.2.min.js"></script>
+    <script src="static/jstorage.js"></script>
+
+</head>
+<body>
+<pre id="out"></pre>
+<form>
+URL:<input name="url" size="50"><button>Import</button>
+</form>
+
+<script>
+$(function() {
+  //var KEY = 'uslicenseplates';
+  //_state = $.jStorage.get(KEY, {});
+  $('form').submit(function() {
+    var url =$('input[name="url"]').val();
+    $.getJSON(url, function(r) {
+      $('#out').text(r);
+    });
+    return false;
+  });
+});
+</script>
+
+</body>
+</html>
