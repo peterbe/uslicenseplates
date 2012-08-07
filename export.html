@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+   <meta charset="utf-8">
+	<title>Export</title>
+	<script src="jquery-1.7.2.min.js"></script>
+	<script src="jstorage.js"></script>
+
+</head>
+<body>
+<pre id="out"></pre>
+<script>
+(function() {
+  var KEY = 'uslicenseplates';
+  _state = $.jStorage.get(KEY, {});
+  $.post('http://www.peterbe.com:8888/', {payload:JSON.stringify(_state)}, function(r) {
+    $('#out').text(r);
+  });
+})();
+</script>
+
+</body>
+</html>
