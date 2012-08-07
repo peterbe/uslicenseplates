@@ -81,7 +81,6 @@ function timeSince(date) {
 var StatesForm = (function() {
   var state;
   function update_numbers() {
-    var container = $('');
     var c = 0, uc = 0;
     $('form a.btn').each(function() {
       ($(this).hasClass('btn-success')) ? c++ : uc++;
