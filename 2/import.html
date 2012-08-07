@@ -14,17 +14,29 @@ URL:<input name="url" size="50"><button>Import</button>
 
 <script>
 $(function() {
-  //var KEY = 'uslicenseplates';
-  //_state = $.jStorage.get(KEY, {});
+  var KEY = 'uslicenseplates';
+  _state = $.jStorage.get(KEY, {});
   $('form').submit(function() {
     var url =$('input[name="url"]').val();
     $.getJSON(url, function(r) {
-      $('#out').text(r);
+      $.each(r, function(name, ts) {
+        if (typeof ts !== 'number') {
+          //ts = 60 * 60 * 24 * 4 * 1000;  // legacy
+          ts = (new Date(Date.parse(ts))).getTime();
+        }
+	//console.log(name, ts);
+	_state[name] = ts;
+      });
+      $.jStorage.set(KEY, _state);
+      
+      $('#out').text(JSON.stringify(r));
     });
     return false;
   });
 });
 </script>
 
+<hr>
+<a href="/">Go back</a>
 </body>
 </html>
