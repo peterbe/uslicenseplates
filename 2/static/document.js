@@ -1,3 +1,5 @@
+// note: $ is zepto
+
 var State = (function() {  // no pun intended
   var KEY = 'uslicenseplates';
   var _state;
