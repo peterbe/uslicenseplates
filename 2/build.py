@@ -10,7 +10,8 @@ from lxml import etree
 from lxml.cssselect import CSSSelector
 
 
-def transfer_css_images(dirname, content, destination, destination_rel):
+def transfer_css_images(dirname, content, destination, destination_rel,
+                        domain_prefix=''):
     if not os.path.isdir(destination):
         os.mkdir(destination)
     def replacer(match):
@@ -34,12 +35,20 @@ def transfer_css_images(dirname, content, destination, destination_rel):
         new_filename = os.path.join(destination, new_filename)
         shutil.copyfile(full_filename, new_filename)
         new_filename = new_filename.replace(destination, destination_rel)
+        new_filename = os.path.normpath(os.path.join(destination, new_filename))
+        if domain_prefix:
+            new_filename = '%s/%s' % (domain_prefix, new_filename)
+
         return match.group().replace(filename, new_filename)
     _regex = re.compile('url\(([^\)]+)\)')
     content = _regex.sub(replacer, content)
     return content
 
-def run(*args):
+def run(domain_prefix=''):
+
+    if domain_prefix:
+        if not (domain_prefix.startswith('http') or domain_prefix.startswith('//')):
+            domain_prefix = '//' + domain_prefix
 
     dest = os.path.join(os.path.dirname('dev.html'), 'static', 'build')
     if os.path.isdir(dest):
@@ -69,6 +78,7 @@ def run(*args):
             content,
             os.path.join(dest, 'img'),
             '../img',
+            domain_prefix,
         )
         if '.min' not in url:
             content = cssmin.cssmin(content, wrap=100)
@@ -92,6 +102,8 @@ def run(*args):
             f.write('/* %s */\n' % url)
             f.write(content)
             f.write('\n')
+    if domain_prefix:
+        new_css_filename = '%s/%s' % (domain_prefix, new_css_filename)
     first_css_link.attrib['href'] = new_css_filename
 
     first_js_tag = None
@@ -126,6 +138,8 @@ def run(*args):
             f.write('/* %s */\n' % url)
             f.write(content)
             f.write('\n')
+    if domain_prefix:
+        new_js_filename = '%s/%s' % (domain_prefix, new_js_filename)
     first_js_tag.attrib['src'] = new_js_filename
 
     ## Apple images
@@ -144,7 +158,10 @@ def run(*args):
             sizes = (57, 57)  # default
         else:
             sizes = tuple([int(x) for x in sizes.split('x')])
-        link.attrib['href'] = apple_images[sizes]
+        image_url = apple_images[sizes]
+        if domain_prefix:
+            image_url = '%s/%s' % (domain_prefix, image_url)
+        link.attrib['href'] = image_url
 
     out = etree.tostring(root, method="html", pretty_print=True)
     #if self.strip_important:
@@ -189,5 +206,12 @@ def get_apple_images(original, destination):
     return images
 
 if __name__ == '__main__':
-    import sys
-    run(*sys.argv[1:])
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+      "-d",
+      "--domain_prefix",
+      help="display a square of a given number",
+      default="")
+    args = parser.parse_args()
+    run(domain_prefix=args.domain_prefix)
