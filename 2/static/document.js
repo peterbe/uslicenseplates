@@ -83,10 +83,8 @@ function timeSince(date) {
 var StatesForm = (function() {
   var state;
   function update_numbers() {
-    var c = 0, uc = 0;
-    $('form a.btn').each(function() {
-      ($(this).hasClass('btn-success')) ? c++ : uc++;
-    });
+    var c = $('form a.btn-success').size();
+    var uc = 50 - c;
     $('#no-spotted').text(c);
     $('#no-remaining').text(uc);
     var oldest = State.oldest();
