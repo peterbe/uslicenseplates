@@ -93,7 +93,7 @@ def run(domain_prefix=''):
             link.getparent().remove(link)
 
     #print [x[2] for x in all_css]
-    youngest = sorted([x[2] for x in all_css])[0]
+    youngest = sorted([x[2] for x in all_css], reverse=True)[0]
     os.mkdir(os.path.join(dest, 'css'))
     new_css_filename = '%s.min.css' % youngest
     new_css_filename = os.path.join(dest, 'css', new_css_filename)
@@ -129,7 +129,7 @@ def run(domain_prefix=''):
         else:
             script.getparent().remove(script)
 
-    youngest = sorted([x[2] for x in all_js])[0]
+    youngest = sorted([x[2] for x in all_js], reverse=True)[0]
     os.mkdir(os.path.join(dest, 'js'))
     new_js_filename = '%s.min.js' % youngest
     new_js_filename = os.path.join(dest, 'js', new_js_filename)
