@@ -57,7 +57,7 @@ def run(domain_prefix=''):
 
     content = open('dev.html').read()
     stripped = content.strip()
-    parser = etree.HTMLParser()
+    parser = etree.HTMLParser(remove_comments=True)
     tree = etree.fromstring(stripped, parser).getroottree()
     page = tree.getroot()
     # lxml inserts a doctype if none exists, so only include it in
@@ -164,8 +164,6 @@ def run(domain_prefix=''):
         link.attrib['href'] = image_url
 
     out = etree.tostring(root, method="html", pretty_print=True)
-    #if self.strip_important:
-    #    out = _importants.sub('', out)
     open('index.html', 'w').write(out)
 
 def get_apple_images(original, destination):
