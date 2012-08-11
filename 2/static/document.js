@@ -82,6 +82,8 @@ function timeSince(date) {
 
 var StatesForm = (function() {
   var state;
+  var start_interval = interval = 60 * 1000;
+
   function update_numbers() {
     var c = $('form a.btn-success').size();
     var uc = 50 - c;
@@ -141,8 +143,22 @@ var StatesForm = (function() {
           State.add(id);
         }
         update_numbers();
+        interval = start_interval;
         return false;
       });
+    },
+    update_loop: function() {
+      State.load();
+      State.iterate(function(name, date) {
+        switch_on($('#' + name), date);
+      });
+      var oldest = State.oldest();
+      if (oldest) {
+        $('#times-ago').text(timeSince(oldest));
+      }
+      interval += 60 * 1000;  // add 1 minute
+      interval = Math.min(interval, 60 * 60 * 1000);
+      setTimeout(StatesForm.update_loop, interval);
     }
 
   }
@@ -199,4 +215,5 @@ $(function() {
     // Hide the address bar!
     window.scrollTo(0, 1);
   }, 0);
+  setTimeout(StatesForm.update_loop, 60 * 1000);
 });
