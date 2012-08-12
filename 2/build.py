@@ -15,7 +15,6 @@ def transfer_css_images(dirname, content, destination, destination_rel,
                         domain_prefix=''):
     if not os.path.isdir(destination):
         os.mkdir(destination)
-    print "DOMAIN_PREFIX", repr(domain_prefix)
     urls = []
 
     def replacer(match):
@@ -174,11 +173,9 @@ def run(domain_prefix='', create_appcache_manifest=False):
     if create_appcache_manifest:
         appcache_filename = os.path.join(dest, 'appcache.manifest')
         with open(appcache_filename, 'w') as f:
-            f.write("CACHE:\n/\n")
+            f.write("CACHE MANIFEST\n")
             f.write("\n".join(all_urls))
             f.write("\n\nNETWORK:\n*\n")
-            #youngest = max(youngest_css, youngest_js)
-            #youngest = datetime.datetime.fromtimestamp(youngest)
             f.write("\n# version: %s" % datetime.datetime.now())
         page.attrib['manifest'] = appcache_filename
 
