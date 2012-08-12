@@ -2,8 +2,9 @@
 import re
 import os
 import stat
-import jsmin
 import shutil
+import datetime
+import jsmin
 import cssmin
 from PIL import Image
 from lxml import etree
@@ -14,6 +15,9 @@ def transfer_css_images(dirname, content, destination, destination_rel,
                         domain_prefix=''):
     if not os.path.isdir(destination):
         os.mkdir(destination)
+    print "DOMAIN_PREFIX", repr(domain_prefix)
+    urls = []
+
     def replacer(match):
         filename = match.groups()[0]
         if (filename.startswith('"') and filename.endswith('"')) or \
@@ -36,15 +40,15 @@ def transfer_css_images(dirname, content, destination, destination_rel,
         shutil.copyfile(full_filename, new_filename)
         new_filename = new_filename.replace(destination, destination_rel)
         new_filename = os.path.normpath(os.path.join(destination, new_filename))
-        if domain_prefix:
-            new_filename = '%s/%s' % (domain_prefix, new_filename)
-
+        new_filename = '%s/%s' % (domain_prefix, new_filename)
+        urls.append(new_filename)
         return match.group().replace(filename, new_filename)
     _regex = re.compile('url\(([^\)]+)\)')
     content = _regex.sub(replacer, content)
-    return content
+    return content, urls
 
-def run(domain_prefix=''):
+
+def run(domain_prefix='', create_appcache_manifest=False):
 
     if domain_prefix:
         if not (domain_prefix.startswith('http') or domain_prefix.startswith('//')):
@@ -64,6 +68,8 @@ def run(domain_prefix=''):
     # the root if it was in the original html.
     root = tree if stripped.startswith(tree.docinfo.doctype) else page
 
+    all_urls = []
+
     first_css_link = None
     all_css = []
     for link in CSSSelector('link')(page):
@@ -73,13 +79,14 @@ def run(domain_prefix=''):
 
         timestamp = os.stat(url)[stat.ST_MTIME]
         content = open(url).read()
-        content = transfer_css_images(
+        content, image_urls = transfer_css_images(
             os.path.dirname(url),
             content,
             os.path.join(dest, 'img'),
             '../img',
             domain_prefix,
         )
+        all_urls.extend(image_urls)
         if '.min' not in url:
             content = cssmin.cssmin(content, wrap=100)
         all_css.append((
@@ -92,18 +99,18 @@ def run(domain_prefix=''):
         else:
             link.getparent().remove(link)
 
-    #print [x[2] for x in all_css]
-    youngest = sorted([x[2] for x in all_css], reverse=True)[0]
+    youngest_css = sorted([x[2] for x in all_css], reverse=True)[0]
     os.mkdir(os.path.join(dest, 'css'))
-    new_css_filename = '%s.min.css' % youngest
+    new_css_filename = '%s.min.css' % youngest_css
     new_css_filename = os.path.join(dest, 'css', new_css_filename)
     with open(new_css_filename, 'w') as f:
         for url, content, timestamp in all_css:
             f.write('/* %s */\n' % url)
             f.write(content)
             f.write('\n')
-    if domain_prefix:
-        new_css_filename = '%s/%s' % (domain_prefix, new_css_filename)
+    #if domain_prefix:
+    new_css_filename = '%s/%s' % (domain_prefix, new_css_filename)
+    all_urls.append(new_css_filename)
     first_css_link.attrib['href'] = new_css_filename
 
     first_js_tag = None
@@ -129,17 +136,18 @@ def run(domain_prefix=''):
         else:
             script.getparent().remove(script)
 
-    youngest = sorted([x[2] for x in all_js], reverse=True)[0]
+    youngest_js = sorted([x[2] for x in all_js], reverse=True)[0]
     os.mkdir(os.path.join(dest, 'js'))
-    new_js_filename = '%s.min.js' % youngest
+    new_js_filename = '%s.min.js' % youngest_js
     new_js_filename = os.path.join(dest, 'js', new_js_filename)
     with open(new_js_filename, 'w') as f:
         for url, content, timestamp in all_js:
             f.write('/* %s */\n' % url)
             f.write(content)
             f.write('\n')
-    if domain_prefix:
-        new_js_filename = '%s/%s' % (domain_prefix, new_js_filename)
+    #if domain_prefix:
+    new_js_filename = '%s/%s' % (domain_prefix, new_js_filename)
+    all_urls.append(new_js_filename)
     first_js_tag.attrib['src'] = new_js_filename
 
     ## Apple images
@@ -162,6 +170,17 @@ def run(domain_prefix=''):
         if domain_prefix:
             image_url = '%s/%s' % (domain_prefix, image_url)
         link.attrib['href'] = image_url
+
+    if create_appcache_manifest:
+        appcache_filename = os.path.join(dest, 'appcache.manifest')
+        with open(appcache_filename, 'w') as f:
+            f.write("CACHE:\n/\n")
+            f.write("\n".join(all_urls))
+            f.write("\n\nNETWORK:\n*\n")
+            #youngest = max(youngest_css, youngest_js)
+            #youngest = datetime.datetime.fromtimestamp(youngest)
+            f.write("\n# version: %s" % datetime.datetime.now())
+        page.attrib['manifest'] = appcache_filename
 
     out = etree.tostring(root, method="html", pretty_print=True)
     open('index.html', 'w').write(out)
@@ -211,5 +230,14 @@ if __name__ == '__main__':
       "--domain_prefix",
       help="display a square of a given number",
       default="")
+    parser.add_argument(
+      "-a",
+      "--create_appcache_manifest",
+      help="generate and insert a appcache.manifest",
+      action='store_true',
+      default=False)
     args = parser.parse_args()
-    run(domain_prefix=args.domain_prefix)
+    run(
+        domain_prefix=args.domain_prefix,
+        create_appcache_manifest=args.create_appcache_manifest
+    )
