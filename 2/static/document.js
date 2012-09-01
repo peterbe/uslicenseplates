@@ -1,4 +1,5 @@
 // note: $ is zepto
+// note: namespace `Facebook` should be loaded
 
 var State = (function() {  // no pun intended
   var KEY = 'uslicenseplates';
@@ -35,12 +36,12 @@ var State = (function() {  // no pun intended
           //ts = 60 * 60 * 24 * 4 * 1000;  // legacy
           ts = Date.parse(ts);
         }
-        if (o == null) o = ts;
+        if (o === null) o = ts;
         else if (ts < o) o = ts;
       });
       return o;
     }
-  }
+  };
 })();
 
 function timeSince(date) {
@@ -58,11 +59,11 @@ function timeSince(date) {
   } else if (delta < minute) {
     fuzzy = delta + ' seconds ago';
   } else if (delta < 2 * minute) {
-    fuzzy = 'a minute ago'
+    fuzzy = 'a minute ago';
   } else if (delta < hour) {
     fuzzy = Math.floor(delta / minute) + ' minutes ago';
   } else if (Math.floor(delta / hour) == 1) {
-    fuzzy = '1 hour ago'
+    fuzzy = '1 hour ago';
   } else if (delta < day) {
     fuzzy = Math.floor(delta / hour) + ' hours ago';
   } else if (delta < day) {
@@ -82,11 +83,13 @@ function timeSince(date) {
 
 var StatesForm = (function() {
   var state;
-  var start_interval = interval = 60 * 1000;
+  var start_interval = 60 * 1000;
+  var interval = start_interval;
+  var c, uc;
 
   function update_numbers() {
-    var c = $('form a.btn-success').size();
-    var uc = 50 - c;
+    c = $('form a.btn-success').size();
+    uc = 50 - c;
     $('#no-spotted').text(c);
     $('#no-remaining').text(uc);
     var oldest = State.oldest();
@@ -96,12 +99,15 @@ var StatesForm = (function() {
     } else {
       $('#times-ago-outer').hide();
     }
-
   }
   function switch_on($el, timestamp) {
     $el.addClass('btn-success');
     $('i', $el).addClass('icon-white').removeClass('icon-remove').addClass('icon-check');
     $('span', $el).text(timeSince(timestamp));
+    if (Facebook.is_logged_in()) {
+      var state = $.trim($el.html().split('<span>')[0].split('</i>')[1]);
+      Facebook.startBragging(state, c, uc);
+    }
   }
 
   function switch_off($el) {
@@ -161,7 +167,7 @@ var StatesForm = (function() {
       setTimeout(StatesForm.update_loop, interval);
     }
 
-  }
+  };
 })();
 
 
@@ -204,7 +210,7 @@ var Nav = (function() {
          return false;
        });
      }
-  }
+  };
 })();
 
 $(function() {

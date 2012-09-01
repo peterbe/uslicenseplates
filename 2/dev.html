@@ -3,14 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>License Plate Spotter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="author" content="Peter Bengtsson - peterbe.com">
 
     <!-- Le styles -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="static/document.css" rel="stylesheet">
+    <link href="static/css/document.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="static/css/facebook.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="static/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -55,6 +57,33 @@
 
     <div class="container">
 
+<div id="facebook">
+
+  <div class="start-bragging facebook-dialog" style="display:none">
+    <h3>Well done!</h3>
+    <h4>Do you want to brag about this on Facebook?</h4>
+    <button class="btn btn-primary proceed">Show me how it would look</button>
+    <button class="btn cancel">Not right now</button>
+  </div>
+
+  <div class="confirm-bragging facebook-dialog" style="display:none">
+    <h4>What it will look like:</h4>
+    <p class="text"></p>
+    <button class="btn btn-primary proceed">Go for it!</button>
+    <button class="btn btn-mini cancel">Cancel</button>
+  </div>
+
+
+  <div class="login" style="display:none">
+    <p style="float:right"><button class="btn">Login</button></p>
+  </div>
+
+  <div class="logout" style="display:none">
+    <p style="float:right"><button class="btn btn-mini">Logout</button></p>
+    <p class="name"></p>
+  </div>
+
+</div>
 
 
       <p id="loading">Loading...</p>
@@ -67,7 +96,11 @@
         </span>
       </p>
 
-      <form id="form" style="display:none">
+
+
+<form id="form" style="display:none">
+
+ <pre id=out></pre>
 
 <a class="btn" href="#" id="Alabama"><i class="icon-remove"></i> Alabama <span></span></a>
 <a class="btn" href="#" id="Alaska"><i class="icon-remove"></i> Alaska <span></span></a>
@@ -184,5 +217,9 @@
     <script src="static/jstorage.js"></script>
     <script src="static/moment.min.js"></script>
     <script src="static/document.js"></script>
+    <div id="fb-root"></div>
+    <script src="static/facebook.js"></script>
+
+
   </body>
 </html>

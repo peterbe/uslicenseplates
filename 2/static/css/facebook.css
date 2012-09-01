@@ -1,0 +1,8 @@
+.facebook-dialog {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.facebook-dialog .text {
+  font-family: Courier New, Courier;
+}
