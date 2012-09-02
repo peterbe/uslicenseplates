@@ -79,6 +79,9 @@ var Facebook = (function() {
         description: getDescription(false)
       }, function(response) {
         //console.log(response);
+        _state = null;
+        _no_spotted = null;
+        _no_spotted = null;
         $('.facebook-dialog').hide();
       });
 
@@ -87,6 +90,9 @@ var Facebook = (function() {
 
     $('.start-bragging button.cancel', container).click(function() {
       $('.facebook-dialog').hide();
+      _state = null;
+      _no_spotted = null;
+      _no_remaining = null;
       return false;
     });
 
