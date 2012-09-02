@@ -37,23 +37,32 @@ var Facebook = (function() {
     });
   }
 
-  function loggedOut(response) {
+  function loggedOut() {
     $('.logout .name', container).text('');
     $('.logout', container).hide();
-    $('.login', container).show()();
+    $('.login', container).show();
   }
 
   function onload() {
     if (!_is_logged_in && $.jStorage.get(KEY)) {
+      // we don't know if Facebook has said we're logged in yet
+      // but we know what the details probably will be
       $('.login', container).hide();
       $('.logout', container).show();
       showLoggedIn($.jStorage.get(KEY));
+      setTimeout(function() {
+        if (!_is_logged_in) {
+          $('.login', container).show();
+          $('.logout', container).hide();
+        }
+      }, 3 * 1000);
     } else {
       $('.login', container).show();
     }
 
     $('.logout button', container).click(function() {
       $.jStorage.deleteKey(KEY);
+      loggedOut();
       FB.logout(function(response) { }, {});
       return false;
     });
@@ -78,7 +87,6 @@ var Facebook = (function() {
         caption: 'License Spotter',
         description: getDescription(false)
       }, function(response) {
-        //console.log(response);
         _state = null;
         _no_spotted = null;
         _no_spotted = null;
@@ -100,12 +108,10 @@ var Facebook = (function() {
 
   function handleStatusChange(response) {
     //console.log('handleStatusChange RESPONSE:', response);
-
     if (response.authResponse) {
-      //console.log(response);
       loggedIn(response);
     } else if (_is_logged_in) {
-      loggedOut(response);
+      loggedOut();
     } else {
       $('.login', container).show();
     }

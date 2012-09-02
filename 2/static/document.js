@@ -100,11 +100,11 @@ var StatesForm = (function() {
       $('#times-ago-outer').hide();
     }
   }
-  function switch_on($el, timestamp) {
+  function switch_on($el, timestamp, use_facebook) {
     $el.addClass('btn-success');
     $('i', $el).addClass('icon-white').removeClass('icon-remove').addClass('icon-check');
     $('span', $el).text(timeSince(timestamp));
-    if (Facebook.is_logged_in()) {
+    if (use_facebook && Facebook.is_logged_in()) {
       var state = $.trim($el.html().split('<span>')[0].split('</i>')[1]);
       Facebook.startBragging(state, c, uc);
     }
@@ -120,7 +120,7 @@ var StatesForm = (function() {
      preload: function() {
        State.load();
        State.iterate(function(name, date) {
-         switch_on($('#' + name), date);
+         switch_on($('#' + name), date, false);
        });
        update_numbers();
        $('#loading').hide();
@@ -145,7 +145,7 @@ var StatesForm = (function() {
           }
           switch_off($el);
         } else {
-          switch_on($el, new Date());
+          switch_on($el, new Date(), true);
           State.add(id);
         }
         update_numbers();
@@ -156,7 +156,7 @@ var StatesForm = (function() {
     update_loop: function() {
       State.load();
       State.iterate(function(name, date) {
-        switch_on($('#' + name), date);
+        switch_on($('#' + name), date, false);
       });
       var oldest = State.oldest();
       if (oldest) {
