@@ -23,13 +23,17 @@ var Facebook = (function() {
     return text;
   }
 
+  function showLoggedIn(data) {
+    $('.logout .name', container).html('<strong>'+ data.name + '</strong>, you\'re logged in.');
+  }
+
   function loggedIn(response) {
     _is_logged_in = true;
     $('.login', container).hide();
     $('.logout', container).show();
     FB.api('/me', function(response) {
       $.jStorage.set(KEY, response);
-      $('.logout .name', container).html('<strong>'+ response.name + '</strong>, you\'re logged in.');
+      showLoggedIn(response);
     });
   }
 
@@ -37,16 +41,24 @@ var Facebook = (function() {
     $('.logout .name', container).text('');
     $('.logout', container).hide();
     $('.login', container).show()();
-    $.jStorage.deleteKey(KEY);
   }
 
   function onload() {
-    $('#facebook .logout button').click(function() {
+    if (!_is_logged_in && $.jStorage.get(KEY)) {
+      $('.login', container).hide();
+      $('.logout', container).show();
+      showLoggedIn($.jStorage.get(KEY));
+    } else {
+      $('.login', container).show();
+    }
+
+    $('.logout button', container).click(function() {
+      $.jStorage.deleteKey(KEY);
       FB.logout(function(response) { }, {});
       return false;
     });
 
-    $('#facebook .login button').click(function() {
+    $('.login button', container).click(function() {
       //FB.login(function(response) { }, {scope:'email'});
       // see https://developers.facebook.com/docs/authentication/permissions/
       // on comma separated list of permissions.
@@ -55,34 +67,28 @@ var Facebook = (function() {
     });
 
     $('.start-bragging button.proceed', container).click(function() {
-      confirmBragging();
-      return false;
-    });
-
-    $('.confirm-bragging button.proceed', container).click(function() {
       var filename = _state.toLowerCase().replace(' ','') + '.jpg';
-      // CDN?
-      var picture_url = 'http://uslicensespotter.com/static/plates/' + filename;
+      var cdn = 'd1xair11r8dkna.cloudfront.net';
+      var picture_url = 'http://' + cdn + '/static/plates/' + filename;
       FB.ui({
          method: 'feed',
-        link: 'http://uslicensespotter.com/',
+        link: 'http://uslicensespotter.com/#about',
         picture: picture_url,
         name: 'I spotted ' + _state + '!',
         caption: 'License Spotter',
         description: getDescription(false)
       }, function(response) {
-        console.log(response);
+        //console.log(response);
         $('.facebook-dialog').hide();
       });
 
       return false;
     });
 
-    $('.start-bragging button.cancel, .confirm-bragging button.cancel', container).click(function() {
+    $('.start-bragging button.cancel', container).click(function() {
       $('.facebook-dialog').hide();
       return false;
     });
-
 
   }
 
@@ -99,16 +105,7 @@ var Facebook = (function() {
     }
   }
 
-  function confirmBragging() {
-    $('.start-bragging', container).hide();
-
-    var c = $('.confirm-bragging', container);
-    $('.text', c).html(getDescription(true));
-    c.show();
-  }
-
   function startBragging(state, no_spotted, no_remaining) {
-    $('.confirm-bragging', container).hide();
     var c = $('.start-bragging', container);
     _state = state;
     _no_spotted = no_spotted;

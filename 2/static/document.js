@@ -182,7 +182,10 @@ var Nav = (function() {
          $('#extra-nav').hide();
          $('.page').hide();
          $('#form').show();
-         $('#spotted-outer:hidden').show();
+         $('#spotted-outer').show();
+         if (location.hash) {
+           location.hash = '';
+         }
          return false;
        });
        $('a.nav-about').click(function() {
@@ -222,4 +225,11 @@ $(function() {
     window.scrollTo(0, 1);
   }, 0);
   setTimeout(StatesForm.update_loop, 60 * 1000);
+  if (location.hash === '#about') {
+    $('#form').hide();
+    $('#spotted-outer').hide();
+    $('.page').hide();
+    $('#extra-nav').hide();
+    $('#about').show();
+  }
 });
