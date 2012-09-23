@@ -1,6 +1,6 @@
 var Facebook = (function() {
   var KEY = 'facebookinfo';
-  var BACKUPURL = 'http://localhost:9999/';
+  var BACKUPURL = 'http://backup.uslicensespotter.com/';
   var _is_logged_in = false;
   var container = $('#facebook');
   var _state;
