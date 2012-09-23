@@ -64,6 +64,7 @@ var Facebook = (function() {
       $.jStorage.deleteKey(KEY);
       loggedOut();
       FB.logout(function(response) { }, {});
+      _is_logged_in = false;
       return false;
     });
 
@@ -112,6 +113,7 @@ var Facebook = (function() {
       loggedIn(response);
     } else if (_is_logged_in) {
       loggedOut();
+      _is_logged_in = false;
     } else {
       $('.login', container).show();
     }
