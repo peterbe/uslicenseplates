@@ -1,10 +1,16 @@
 var Facebook = (function() {
   var KEY = 'facebookinfo';
+  var BACKUPURL = 'http://localhost:9999/';
   var _is_logged_in = false;
   var container = $('#facebook');
   var _state;
   var _no_spotted;
   var _no_remaining;
+
+  function backup() {
+    var id = $.jStorage.get(KEY).id;
+    $.post(BACKUPURL + id, $.jStorage.get('uslicenseplates'));
+  }
 
   function getDescription(use_html) {
     var second_sentence;
@@ -133,6 +139,7 @@ var Facebook = (function() {
   }
 
   return {
+     backup: backup,
      onload: onload,
      handleStatusChange: handleStatusChange,
      startBragging: startBragging,

@@ -4,12 +4,15 @@
 var State = (function() {  // no pun intended
   var KEY = 'uslicenseplates';
   var _state;
+
   function load() {
     _state = $.jStorage.get(KEY, {});
   }
+
   function save() {
     $.jStorage.set(KEY, _state);
   }
+
   return {
      load: load,
       save: save,
@@ -107,6 +110,7 @@ var StatesForm = (function() {
     if (use_facebook && Facebook.is_logged_in()) {
       var state = $.trim($el.html().split('<span>')[0].split('</i>')[1]);
       Facebook.startBragging(state, c, uc);
+      Facebook.backup();
     }
   }
 
