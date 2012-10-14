@@ -4,7 +4,7 @@
 var State = (function() {  // no pun intended
   var KEY = 'uslicenseplates';
   var BACKUPURL = 'http://backup.uslicensespotter.com/';
- // var BACKUPURL = 'http://backup.uslicensespotter.local/';
+//  var BACKUPURL = 'http://backup.uslicensespotter.local/';
 
   var _state;
 
@@ -17,11 +17,19 @@ var State = (function() {  // no pun intended
   }
 
   function backup(id) {
-    $.post(BACKUPURL + id, $.jStorage.get('uslicenseplates'));
-    $.jStorage.set('lastbackupdate', new Date());
-    var then = new Date();
-    $.jStorage.set('lastbackupdate', then.getTime());
-    $('.last-backup code').text($.jStorage.get('lastbackupdate'));
+    $.post(BACKUPURL + id, $.jStorage.get('uslicenseplates'), function() {
+      var then = new Date();
+      $.jStorage.set('lastbackupdate', then.getTime());
+      $('.last-backup code').text(timeSince(then.getTime()));
+    });
+  }
+
+  function backup_delete(id, state) {
+    $.post(BACKUPURL + id + '/delete', {state: state}, function() {
+      var then = new Date();
+      $.jStorage.set('lastbackupdate', then.getTime());
+      $('.last-backup code').text(timeSince(then.getTime()));
+    });
   }
 
   function restore(id) {
@@ -41,6 +49,7 @@ var State = (function() {  // no pun intended
 
   return {
      backup: backup,
+     backup_delete: backup_delete,
       restore: restore,
      load: load,
       save: save,
@@ -138,7 +147,6 @@ var StatesForm = (function() {
     if (use_facebook && Facebook.is_logged_in()) {
       var state = $.trim($el.html().split('<span>')[0].split('</i>')[1]);
       Facebook.startBragging(state, c + 1, uc - 1);
-      State.backup($.jStorage.get('facebookinfo').id);
     }
   }
 
@@ -146,6 +154,7 @@ var StatesForm = (function() {
     $el.removeClass('btn-success');
     $('i', $el).removeClass('icon-white').removeClass('icon-check').addClass('icon-remove');
     $('span', $el).text('');
+    State.backup_delete($.jStorage.get('facebookinfo').id, $el.attr('id'));
   }
 
   return {
@@ -181,6 +190,7 @@ var StatesForm = (function() {
         } else {
           switch_on($el, new Date(), true);
           State.add(id);
+          State.backup($.jStorage.get('facebookinfo').id);
         }
         update_numbers();
         interval = start_interval;
@@ -247,6 +257,10 @@ var Nav = (function() {
          return false;
        });
        $('a.nav-backup').click(function() {
+         var last_backup_date = $.jStorage.get('lastbackupdate');
+         if (last_backup_date) {
+           $('.last-backup code').text(timeSince(last_backup_date));
+         }
          $('#form').hide();
          $('#spotted-outer').hide();
          $('.page').hide();
