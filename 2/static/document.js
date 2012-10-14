@@ -3,6 +3,9 @@
 
 var State = (function() {  // no pun intended
   var KEY = 'uslicenseplates';
+  var BACKUPURL = 'http://backup.uslicensespotter.com/';
+ // var BACKUPURL = 'http://backup.uslicensespotter.local/';
+
   var _state;
 
   function load() {
@@ -13,7 +16,32 @@ var State = (function() {  // no pun intended
     $.jStorage.set(KEY, _state);
   }
 
+  function backup(id) {
+    $.post(BACKUPURL + id, $.jStorage.get('uslicenseplates'));
+    $.jStorage.set('lastbackupdate', new Date());
+    var then = new Date();
+    $.jStorage.set('lastbackupdate', then.getTime());
+    $('.last-backup code').text($.jStorage.get('lastbackupdate'));
+  }
+
+  function restore(id) {
+    $.getJSON(BACKUPURL + id, function(response) {
+      var any = false;
+      $.each(response, function(name, ts) {
+        _state[name] = ts;
+        StatesForm.switch_on($('#' + name), ts, false);
+        any = true;
+      });
+      if (any) {
+        StatesForm.update_numbers();
+        save();
+      }
+    });
+  }
+
   return {
+     backup: backup,
+      restore: restore,
      load: load,
       save: save,
       add: function(name) {
@@ -109,8 +137,8 @@ var StatesForm = (function() {
     $('span', $el).text(timeSince(timestamp));
     if (use_facebook && Facebook.is_logged_in()) {
       var state = $.trim($el.html().split('<span>')[0].split('</i>')[1]);
-      Facebook.startBragging(state, c, uc);
-      Facebook.backup();
+      Facebook.startBragging(state, c + 1, uc - 1);
+      State.backup($.jStorage.get('facebookinfo').id);
     }
   }
 
@@ -121,6 +149,8 @@ var StatesForm = (function() {
   }
 
   return {
+     switch_on: switch_on,
+      update_numbers: update_numbers,
      preload: function() {
        State.load();
        State.iterate(function(name, date) {
@@ -216,6 +246,14 @@ var Nav = (function() {
          $('#facebook').show();//fadeIn(300);
          return false;
        });
+       $('a.nav-backup').click(function() {
+         $('#form').hide();
+         $('#spotted-outer').hide();
+         $('.page').hide();
+         $('#extra-nav').hide();
+         $('#backup').show();//fadeIn(300);
+         return false;
+       });
      }
   };
 })();
@@ -235,5 +273,9 @@ $(function() {
     $('.page').hide();
     $('#extra-nav').hide();
     $('#about').show();
+  }
+  var last_backup_date = $.jStorage.get('lastbackupdate');
+  if (last_backup_date) {
+    $('.last-backup code').text(timeSince(last_backup_date));
   }
 });
