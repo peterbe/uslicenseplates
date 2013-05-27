@@ -86,7 +86,6 @@ var State = (function() {  // no pun intended
 
 function timeSince(date) {
   var delta = Math.round((new Date().getTime() - date) / 1000);
-
   var minute = 60,
     hour = minute * 60,
     day = hour * 24,
@@ -114,12 +113,13 @@ function timeSince(date) {
     fuzzy = Math.floor(delta / day) + ' days ago';
   } else if (Math.floor(delta / week) == 1) {
     fuzzy = '1 week ago';
-  } else if ((delta / week) > 1) {
+  } else if ((delta / week) <= 9) {
     fuzzy = Math.floor(delta / week) +' weeks ago';
+  } else  {
+    fuzzy = Math.floor(delta / week / 4.2) +' months ago';
   }
   return fuzzy;
 }
-
 
 var StatesForm = (function() {
   var state;
